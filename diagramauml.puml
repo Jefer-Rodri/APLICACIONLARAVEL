@@ -4,40 +4,45 @@
 class Usuario {
   - nombre: String
   - Apellidos: String
-  - listaLibrosReservados: Libro[]
-  - dejarReseña()
 }
 
 class Libro {
   - titulo: String
-  - autor: Autor
-  - categorias: Categoria[]
-  - reseñas: Reseña[]
+  - usuario_id: Usuario
 }
 
 class Reseña {
   - contenido: String
-  - usuario: Usuario
-  - libro: Libro
+  - usuario_id: Usuario
+  - libro_id: Libro
 }
 
 class Autor {
   - nombre: String
   - Apellido: String
-  - libros: Libro[]
 }
 
 class Categoria {
   - nombre: String
-  - libros: Libro[]
+}
+
+class LibroCategoria {
+  - libro_id: Libro
+  - categoria_id: Categoria
+}
+
+class LibroAutor {
+  - libro_id: Libro
+  - autor_id: Autor
 }
 
 Usuario "1" -- "0..*" Libro : reserva ->
-Libro "1" -- "1" Autor : pertenece a ->
-Libro "1" -- "0..*" Categoria : clasificado en ->
-Libro "1" -- "0..*" Reseña : tiene ->
-Reseña "1" -- "1" Usuario : escrita por ->
-Autor "1" -- "0..*" Libro : escribe ->
-Categoria "1" -- "0..*" Libro : incluye ->
+Libro "*" -- "*" Autor : pertenece a ->
+Libro "1" -- "*" LibroCategoria : clasificado en ->
+Libro "1" -- "*" LibroAutor : clasificado en ->
+Categoria "1" -- "*" LibroCategoria : clasificado en ->
+Categoria "1" -- "*" LibroAutor : clasificado en ->
+Libro "1" -- "*" Reseña : tiene ->
+Reseña "*" -- "1" Usuario : escrita por ->
 
 @enduml
