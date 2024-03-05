@@ -1,0 +1,43 @@
+@startuml diagramauml
+!theme plain
+
+class Usuario {
+  - nombre: String
+  - Apellidos: String
+  - listaLibrosReservados: Libro[]
+  - dejarReseña()
+}
+
+class Libro {
+  - titulo: String
+  - autor: Autor
+  - categorias: Categoria[]
+  - reseñas: Reseña[]
+}
+
+class Reseña {
+  - contenido: String
+  - usuario: Usuario
+  - libro: Libro
+}
+
+class Autor {
+  - nombre: String
+  - Apellido: String
+  - libros: Libro[]
+}
+
+class Categoria {
+  - nombre: String
+  - libros: Libro[]
+}
+
+Usuario "1" -- "0..*" Libro : reserva ->
+Libro "1" -- "1" Autor : pertenece a ->
+Libro "1" -- "0..*" Categoria : clasificado en ->
+Libro "1" -- "0..*" Reseña : tiene ->
+Reseña "1" -- "1" Usuario : escrita por ->
+Autor "1" -- "0..*" Libro : escribe ->
+Categoria "1" -- "0..*" Libro : incluye ->
+
+@enduml
